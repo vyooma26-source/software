@@ -13,12 +13,22 @@ import JobExecution from '@/apps/pilot/pages/job-execution'
 import AdminDashboard from '@/apps/admin/pages/dashboard'
 import OpsDashboard from '@/apps/admin/pages/ops'
 import ErrorPage from '@/core/components/error-page'
+import UserManagement from '@/apps/admin/pages/users'
 import AssetManager from '@/apps/admin/pages/assets'
+import AdminSettings from '@/apps/admin/pages/settings'
 import ClientPortfolio from '@/apps/client/pages/portfolio'
+
+// ... existing imports ...
+
+// ... inside router ...
+
 import ClientSiteView from '@/apps/client/pages/site-view'
 import { ClientDashboard } from '@/apps/client/components/dashboard'
 import ClientProfile from '@/apps/client/pages/profile'
 import ClientSettings from '@/apps/client/pages/settings'
+import ClientBooking from '@/apps/client/pages/booking'
+import ClientReports from '@/apps/client/pages/reports'
+import ClientNotifications from '@/apps/client/pages/notifications'
 
 // Placeholder Pages (Inlined for speed, normally separate)
 // const ClientDash = () => <div>Client Dashboard (Map View)</div> // This is removed as ClientPortfolio is used instead
@@ -45,9 +55,11 @@ const router = createBrowserRouter([
             { index: true, element: <Navigate to="/client/dashboard" replace /> },
             { path: "dashboard", element: <ClientDashboard /> },
             { path: "portfolio", element: <ClientPortfolio /> },
-            { path: "portfolio", element: <ClientPortfolio /> },
             { path: "profile", element: <ClientProfile /> },
             { path: "settings", element: <ClientSettings /> },
+            { path: "booking", element: <ClientBooking /> },
+            { path: "reports", element: <ClientReports /> },
+            { path: "notifications", element: <ClientNotifications /> },
             { path: "sites/:id", element: <ClientSiteView /> },
             { path: "*", element: <Navigate to="/client/dashboard" replace /> }
         ]
@@ -60,7 +72,8 @@ const router = createBrowserRouter([
             { path: "dashboard", element: <AdminDashboard /> },
             { path: "ops", element: <OpsDashboard /> },
             { path: "assets", element: <AssetManager /> },
-            { path: "users", element: <div>Team Management Wrapper</div> }
+            { path: "users", element: <UserManagement /> },
+            { path: "settings", element: <AdminSettings /> }
         ]
     },
 ])

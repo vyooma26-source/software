@@ -1,41 +1,61 @@
-import { MapPin, Navigation } from "lucide-react"
+import { MoreHorizontal, Filter, Plus } from 'lucide-react';
+import { Card, CardContent } from '@/core/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/core/ui/table';
+import { Badge } from '@/core/ui/badge';
+import { Button } from '@/core/ui/button';
+import { MOCK_INSPECTIONS } from '@/core/data/mock-inspections';
 
 export default function OpsDashboard() {
     return (
-        <div className="h-[calc(100vh-8rem)] bg-slate-100 rounded-xl relative overflow-hidden border border-slate-300">
-
-            {/* Placeholder Map Background */}
-            <div className="absolute inset-0 bg-[#e5e7eb] flex items-center justify-center">
-                <div className="text-center text-slate-400">
-                    <MapPin className="w-16 h-16 mx-auto mb-2 opacity-20" />
-                    <p>Interactive Map Module</p>
-                    <p className="text-xs mt-1">Install 'leaflet' for live view</p>
+        <div className="flex flex-col gap-6">
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-bold tracking-tight">Inspection Queue</h1>
+                <div className="flex gap-2">
+                    <Button variant="outline"><Filter className="w-4 h-4 mr-2" /> Filter</Button>
+                    <Button><Plus className="w-4 h-4 mr-2" /> New Mission</Button>
                 </div>
             </div>
 
-            {/* Floating Overlay Panel */}
-            <div className="absolute top-4 left-4 w-80 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg border border-white/50 p-4">
-                <h3 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
-                    <Navigation className="w-4 h-4 text-blue-600" />
-                    Live Fleet (3 Active)
-                </h3>
-                <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-2 bg-white rounded border border-slate-200">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        <div className="flex-1">
-                            <div className="text-sm font-medium">Drone X1</div>
-                            <div className="text-xs text-slate-500">Mission #1 • 85% Battery</div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 bg-white rounded border border-slate-200">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        <div className="flex-1">
-                            <div className="text-sm font-medium">Drone Z9</div>
-                            <div className="text-xs text-slate-500">Mission #4 • 40% Battery</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Card>
+                <CardContent className="p-0">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[100px]">ID</TableHead>
+                                <TableHead>Asset</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead>Assigned Pilot</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="text-right">Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {MOCK_INSPECTIONS.map((inspection) => (
+                                <TableRow key={inspection.id}>
+                                    <TableCell className="font-mono text-xs">{inspection.id}</TableCell>
+                                    <TableCell className="font-medium">Asset {inspection.asset_id}</TableCell>
+                                    <TableCell>{inspection.date}</TableCell>
+                                    <TableCell>{inspection.pilot_name || <span className="text-muted-foreground italic">Unassigned</span>}</TableCell>
+                                    <TableCell>
+                                        <Badge variant={
+                                            inspection.status === 'completed' ? 'success' :
+                                                inspection.status === 'processing' ? 'info' :
+                                                    inspection.status === 'scheduled' ? 'secondary' : 'destructive'
+                                        } className="capitalize">
+                                            {inspection.status}
+                                        </Badge>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Button variant="ghost" size="icon">
+                                            <MoreHorizontal className="w-4 h-4" />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
         </div>
-    )
+    );
 }

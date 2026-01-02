@@ -1,42 +1,74 @@
-import { Button } from "@/core/ui/button"
+import { MoreHorizontal, Plus, Search } from 'lucide-react';
+import { Card, CardContent } from '@/core/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/core/ui/table';
+import { Badge } from '@/core/ui/badge';
+import { Button } from '@/core/ui/button';
+import { Input } from '@/core/ui/input';
+import { MOCK_ASSETS } from '@/core/data/mock-assets';
 
 export default function AssetManager() {
     return (
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold tracking-tight text-slate-900">Assets</h2>
-                <Button>Add New Plant</Button>
+                <h1 className="text-2xl font-bold tracking-tight">Asset Management</h1>
+                <Button><Plus className="w-4 h-4 mr-2" /> Add Asset</Button>
             </div>
 
-            <div className="bg-white border rounded-lg overflow-hidden">
-                <table className="w-full text-left text-sm">
-                    <thead className="bg-slate-50 border-b">
-                        <tr>
-                            <th className="px-6 py-4 font-semibold text-slate-900">Name</th>
-                            <th className="px-6 py-4 font-semibold text-slate-900">Location</th>
-                            <th className="px-6 py-4 font-semibold text-slate-900">Health</th>
-                            <th className="px-6 py-4 font-semibold text-slate-900">Capacity</th>
-                            <th className="px-6 py-4 font-semibold text-slate-900">Last Inspection</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                        <tr className="hover:bg-slate-50/50">
-                            <td className="px-6 py-4 font-medium">Solar Farm Alpha</td>
-                            <td className="px-6 py-4 text-slate-500">Nevada, USA</td>
-                            <td className="px-6 py-4 text-green-600">98%</td>
-                            <td className="px-6 py-4 text-slate-500">120 MW</td>
-                            <td className="px-6 py-4">Oct 12, 2025</td>
-                        </tr>
-                        <tr className="hover:bg-slate-50/50">
-                            <td className="px-6 py-4 font-medium">Desert Array B-12</td>
-                            <td className="px-6 py-4 text-slate-500">Arizona, USA</td>
-                            <td className="px-6 py-4 text-yellow-600">85%</td>
-                            <td className="px-6 py-4 text-slate-500">45 MW</td>
-                            <td className="px-6 py-4">Oct 11, 2025</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div className="flex items-center gap-4 mb-2">
+                <div className="relative flex-1 max-w-sm">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Search assets..." className="pl-9" />
+                </div>
             </div>
+
+            <Card>
+                <CardContent className="p-0">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Asset Name</TableHead>
+                                <TableHead>Location</TableHead>
+                                <TableHead>Capacity</TableHead>
+                                <TableHead>Health Score</TableHead>
+                                <TableHead>Last Inspection</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="text-right">Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {MOCK_ASSETS.map((asset) => (
+                                <TableRow key={asset.id}>
+                                    <TableCell className="font-medium">{asset.name}</TableCell>
+                                    <TableCell>{asset.location}</TableCell>
+                                    <TableCell>{asset.capacity_mw} MW</TableCell>
+                                    <TableCell>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-16 h-2 bg-secondary rounded-full overflow-hidden">
+                                                <div className={`h-full rounded-full ${asset.health_score > 90 ? 'bg-success' : asset.health_score > 70 ? 'bg-warning' : 'bg-destructive'}`} style={{ width: `${asset.health_score}%` }} />
+                                            </div>
+                                            <span className="text-xs font-medium">{asset.health_score}%</span>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>{new Date(asset.last_inspection).toLocaleDateString()}</TableCell>
+                                    <TableCell>
+                                        <Badge variant={
+                                            asset.status === 'active' ? 'success' :
+                                                asset.status === 'maintenance' ? 'warning' : 'destructive'
+                                        } className="capitalize">
+                                            {asset.status}
+                                        </Badge>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Button variant="ghost" size="icon">
+                                            <MoreHorizontal className="w-4 h-4" />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
         </div>
-    )
+    );
 }

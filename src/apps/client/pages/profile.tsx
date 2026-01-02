@@ -1,108 +1,156 @@
-import { User, Mail, Phone, MapPin, CreditCard, Clock, Shield } from 'lucide-react';
+import { Mail, Phone, MapPin, CreditCard, Clock, Shield, Edit2 } from 'lucide-react';
+import { MOCK_USER, MOCK_NOTIFICATIONS } from '@/core/data/mock-user';
+import { Button } from '@/core/ui/button';
+import { Card, CardContent } from '@/core/ui/card';
+import { Badge } from '@/core/ui/badge';
+import { PageHeader } from '@/core/components/page-header';
 
 export default function ClientProfile() {
-    return (
-        <div className="p-8 h-full w-full overflow-y-auto flex flex-col theme-client-premium">
-            {/* Header */}
-            <div className="bg-card rounded-[2.5rem] p-8 border border-white/5 mb-6 flex items-center justify-between">
-                <div className="flex items-center space-x-6">
-                    <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-black text-3xl font-bold">
-                        JD
-                    </div>
-                    <div>
-                        <h1 className="text-3xl font-bold text-white">John Doe</h1>
-                        <p className="text-gray-400">Senior Operations Manager • Acme Corp</p>
-                    </div>
-                </div>
-                <button className="px-8 py-3 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors">
-                    Edit Profile
-                </button>
-            </div>
+    const user = MOCK_USER;
 
-            <div className="grid grid-cols-12 gap-6 flex-1">
-                {/* Left Col: Contact & Personal Info */}
-                <div className="col-span-8 flex flex-col gap-6">
-                    <div className="bg-card rounded-[2.5rem] p-8 border border-white/5 flex-1">
-                        <h3 className="text-xl font-medium text-white mb-6">Personal and Contact Information</h3>
-                        <div className="grid grid-cols-2 gap-y-8 gap-x-4">
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 bg-white/5 rounded-xl text-white">
-                                    <Mail size={20} />
+    return (
+        <div className="h-full w-full flex flex-col gap-3">
+            <PageHeader
+                title="My Profile"
+                description="Manage your account details and preferences"
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 pb-6">
+                {/* Main Profile Info */}
+                <Card className="lg:col-span-8 p-0 overflow-hidden border-border transition-all">
+                    <div className="h-40 bg-primary/10 w-full relative">
+                        <div className="absolute top-6 right-6">
+                            <Badge variant="glass" className="bg-primary/20 backdrop-blur-md border-primary/20 text-primary font-bold">VIP Enterprise</Badge>
+                        </div>
+                    </div>
+                    <div className="px-10 pb-10 -mt-16">
+                        <div className="flex justify-between items-end mb-6">
+                            <div className="flex items-end gap-8">
+                                <div className="w-32 h-32 bg-card rounded-full p-1.5 border-4 border-background shadow-xl">
+                                    <div className="w-full h-full bg-secondary rounded-full flex items-center justify-center text-4xl font-black text-white">
+                                        {user.avatar_initials}
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="text-xs text-gray-500 uppercase tracking-wider">Email Address</label>
-                                    <p className="text-white font-medium">john.doe@acmecorp.com</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 bg-white/5 rounded-xl text-white">
-                                    <Phone size={20} />
-                                </div>
-                                <div>
-                                    <label className="text-xs text-gray-500 uppercase tracking-wider">Phone Number</label>
-                                    <p className="text-white font-medium">+1 (555) 123-4567</p>
-                                </div>
-                            </div>
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 bg-white/5 rounded-xl text-white">
-                                    <MapPin size={20} />
-                                </div>
-                                <div>
-                                    <label className="text-xs text-gray-500 uppercase tracking-wider">Location</label>
-                                    <p className="text-white font-medium">San Francisco, CA</p>
+                                <div className="mb-4">
+                                    <h2 className="text-3xl font-black tracking-tight">{user.name}</h2>
+                                    <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs flex items-center gap-2">
+                                        <Shield size={14} className="text-secondary" />
+                                        {user.role} • {user.company}
+                                    </p>
                                 </div>
                             </div>
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 bg-white/5 rounded-xl text-white">
-                                    <Shield size={20} />
+                            <Button variant="outline" className="mb-4 font-bold border-primary/20 text-primary hover:bg-primary/5">
+                                <Edit2 size={16} className="mr-2" />
+                                Edit Account
+                            </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                            <div className="space-y-6">
+                                <h3 className="text-lg font-medium border-b border-border/50 pb-2">Contact Information</h3>
+                                <div className="space-y-4">
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-4 group">
+                                            <div className="p-3 bg-primary/5 rounded-xl text-primary group-hover:bg-primary/10 transition-colors">
+                                                <Mail size={18} />
+                                            </div>
+                                            <div>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Email Address</p>
+                                                <p className="font-bold text-sm">{user.email}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-4 group">
+                                            <div className="p-3 bg-primary/5 rounded-xl text-primary group-hover:bg-primary/10 transition-colors">
+                                                <Phone size={18} />
+                                            </div>
+                                            <div>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Contact Number</p>
+                                                <p className="font-bold text-sm">{user.phone}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="text-xs text-gray-500 uppercase tracking-wider">Account Role</label>
-                                    <p className="text-white font-medium">Administrator</p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <h3 className="text-lg font-medium border-b border-border/50 pb-2">Organization</h3>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-2 bg-secondary/50 rounded-lg">
+                                            <MapPin size={18} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Location</p>
+                                            <p className="font-medium">{user.location}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-2 bg-secondary/50 rounded-lg">
+                                            <Shield size={18} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-muted-foreground uppercase tracking-wider">Level</p>
+                                            <p className="font-medium">{user.role}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </Card>
 
-                {/* Right Col: Subscription & Status */}
-                <div className="col-span-4 flex flex-col gap-6">
-                    <div className="bg-secondary rounded-[2.5rem] p-8 text-secondary-foreground relative overflow-hidden">
+                {/* Sidebar Column */}
+                <div className="lg:col-span-4 flex flex-col gap-4">
+                    {/* Subscription Card */}
+                    <Card variant="default" className="bg-primary text-primary-foreground border-none overflow-hidden relative">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
                             <CreditCard size={100} />
                         </div>
-                        <h3 className="text-lg font-medium mb-1">Current Plan</h3>
-                        <div className="text-4xl font-bold mb-4">Enterprise</div>
-                        <div className="space-y-2 mb-8">
-                            <div className="flex justify-between text-sm opacity-80">
-                                <span>Renews on</span>
-                                <span>Dec 31, 2025</span>
-                            </div>
-                            <div className="w-full h-1 bg-black/20 rounded-full overflow-hidden">
-                                <div className="h-full w-[80%] bg-white/50" />
-                            </div>
-                        </div>
-                        <button className="w-full py-3 bg-black/20 hover:bg-black/30 rounded-xl transition-colors font-medium">
-                            Manage Subscription
-                        </button>
-                    </div>
+                        <CardContent className="p-8 relative z-10">
+                            <h3 className="text-lg font-medium mb-1 opacity-80">Current Plan</h3>
+                            <div className="text-4xl font-bold mb-6">{user.plan.name}</div>
 
-                    <div className="bg-card rounded-[2.5rem] p-6 border border-white/5 flex-1">
-                        <h3 className="text-white font-medium mb-4 flex items-center gap-2">
-                            <Clock size={16} /> Recent Activity
-                        </h3>
-                        <div className="space-y-4">
-                            {[1, 2, 3].map((_, i) => (
-                                <div key={i} className="flex gap-3 items-center">
-                                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                                    <div>
-                                        <p className="text-sm text-white">Logged in from New Device</p>
-                                        <p className="text-xs text-gray-500">2 hours ago</p>
-                                    </div>
+                            <div className="space-y-4 mb-8">
+                                <div className="flex justify-between text-sm opacity-80">
+                                    <span>Plan Usage</span>
+                                    <span>{user.plan.usage_percent}%</span>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                                <div className="w-full h-1 bg-black/20 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-white rounded-full"
+                                        style={{ width: `${user.plan.usage_percent}%` }}
+                                    />
+                                </div>
+                                <p className="text-xs opacity-60">Renews on {new Date(user.plan.renews_on).toLocaleDateString()}</p>
+                            </div>
+
+                            <Button variant="secondary" className="w-full bg-white/20 hover:bg-white/30 text-white border-none">
+                                Manage Subscription
+                            </Button>
+                        </CardContent>
+                    </Card>
+
+                    {/* Activity Feed */}
+                    <Card>
+                        <CardContent className="p-6">
+                            <h3 className="font-medium mb-4 flex items-center gap-2">
+                                <Clock size={16} /> Recent Activity
+                            </h3>
+                            <div className="space-y-6">
+                                {MOCK_NOTIFICATIONS.map((notif) => (
+                                    <div key={notif.id} className="flex gap-3 relative">
+                                        <div className="flex-none mt-1.5">
+                                            <div className="w-2 h-2 rounded-full bg-primary ring-4 ring-primary/20" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium leading-none mb-1">{notif.message}</p>
+                                            <p className="text-xs text-muted-foreground">{notif.time}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </div>

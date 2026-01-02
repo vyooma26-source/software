@@ -45,7 +45,13 @@ export function AdminSidebar() {
             </nav>
 
             <div className="p-4 border-t border-slate-800">
-                <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                <button
+                    onClick={() => navigate('/admin/settings')}
+                    className={cn(
+                        "flex items-center w-full px-3 py-2 text-sm font-medium transition-colors hover:text-white",
+                        location.pathname === '/admin/settings' ? "text-white bg-slate-900 rounded-md" : "text-slate-400"
+                    )}
+                >
                     <Settings className="w-5 h-5 mr-3" />
                     Settings
                 </button>

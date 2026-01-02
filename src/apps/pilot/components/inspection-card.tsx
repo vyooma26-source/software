@@ -1,4 +1,4 @@
-import { Calendar, MapPin, AlertCircle } from "lucide-react"
+import { Calendar, MapPin } from "lucide-react"
 import { Button } from "@/core/ui/button"
 
 export type InspectionStatus = 'scheduled' | 'in_progress' | 'processing' | 'completed' | 'failed';
