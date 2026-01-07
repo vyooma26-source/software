@@ -1,6 +1,7 @@
 import { LayoutDashboard, Radio, Server, Users, Settings, LogOut } from "lucide-react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { cn } from "@/core/lib/utils"
+import { SidebarExpanded } from "@/core/components/sidebar/sidebar-expanded"
+import { SidebarNavItem } from "@/core/components/sidebar/sidebar-item"
 
 const NAV_ITEMS = [
     { label: "Overview", icon: LayoutDashboard, path: "/admin/dashboard" },
@@ -13,53 +14,38 @@ export function AdminSidebar() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const topNav: SidebarNavItem[] = NAV_ITEMS.map(item => ({
+        ...item,
+        active: location.pathname === item.path,
+        onClick: () => navigate(item.path)
+    }));
+
+    const bottomNav: SidebarNavItem[] = [
+        {
+            label: "Settings",
+            icon: Settings,
+            active: location.pathname === '/admin/settings',
+            onClick: () => navigate('/admin/settings')
+        },
+        {
+            label: "Sign Out",
+            icon: LogOut,
+            variant: 'destructive',
+            onClick: () => navigate('/')
+        }
+    ];
+
     return (
-        <aside className="w-64 bg-slate-950 text-white flex flex-col h-screen border-r border-slate-800">
-            <div className="p-6">
-                <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">V</div>
-                    <span>Vyooma</span>
+        <SidebarExpanded
+            brandName="Vyooma"
+            subText="Admin Console"
+            logo={
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground shadow-sm font-bold text-xl">
+                    V
                 </div>
-                <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Admin Console</div>
-            </div>
-
-            <nav className="flex-1 px-3 space-y-1">
-                {NAV_ITEMS.map((item) => {
-                    const isActive = location.pathname === item.path;
-                    return (
-                        <button
-                            key={item.path}
-                            onClick={() => navigate(item.path)}
-                            className={cn(
-                                "flex items-center w-full px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
-                                isActive
-                                    ? "bg-blue-600 text-white shadow-sm"
-                                    : "text-slate-400 hover:text-white hover:bg-slate-900"
-                            )}
-                        >
-                            <item.icon className="w-5 h-5 mr-3" />
-                            {item.label}
-                        </button>
-                    )
-                })}
-            </nav>
-
-            <div className="p-4 border-t border-slate-800">
-                <button
-                    onClick={() => navigate('/admin/settings')}
-                    className={cn(
-                        "flex items-center w-full px-3 py-2 text-sm font-medium transition-colors hover:text-white",
-                        location.pathname === '/admin/settings' ? "text-white bg-slate-900 rounded-md" : "text-slate-400"
-                    )}
-                >
-                    <Settings className="w-5 h-5 mr-3" />
-                    Settings
-                </button>
-                <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 transition-colors mt-1">
-                    <LogOut className="w-5 h-5 mr-3" />
-                    Sign Out
-                </button>
-            </div>
-        </aside>
+            }
+            topNav={topNav}
+            bottomNav={bottomNav}
+        />
     )
 }

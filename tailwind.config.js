@@ -18,8 +18,26 @@ export default {
             },
         },
         extend: {
+            fontSize: {
+                'display': ['3rem', { lineHeight: '1.2', fontWeight: '900', letterSpacing: '-0.02em' }],
+                'h1': ['2.25rem', { lineHeight: '1.2', fontWeight: '800', letterSpacing: '-0.02em' }],
+                'h2': ['1.5rem', { lineHeight: '1.3', fontWeight: '700', letterSpacing: '-0.01em' }],
+                'h3': ['1.25rem', { lineHeight: '1.4', fontWeight: '600', letterSpacing: '-0.01em' }],
+            },
             fontFamily: {
                 sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+            spacing: {
+                'sidebar': 'var(--sidebar-width)',
+            },
+            zIndex: {
+                'sidebar': '100',
+                'dropdown': '200',
+                'sticky': '300',
+                'modal-backdrop': '400',
+                'modal': '500',
+                'toast': '600',
+                'tooltip': '700',
             },
             colors: {
                 border: "hsl(var(--border))",

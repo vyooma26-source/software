@@ -1,47 +1,62 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
+import { ErrorBoundary } from '@/core/components/error-boundary'
 import './index.css'
 
-// Layouts
-import PilotLayout from '@/apps/pilot/layout'
-import ClientLayout from '@/apps/client/layout'
-import AdminLayout from '@/apps/admin/layout'
+import { SkipToContent } from '@/core/components/skip-link'
 
-import PilotDashboard from '@/apps/pilot/pages/dashboard'
-import JobExecution from '@/apps/pilot/pages/job-execution'
-import AdminDashboard from '@/apps/admin/pages/dashboard'
-import OpsDashboard from '@/apps/admin/pages/ops'
-import ErrorPage from '@/core/components/error-page'
-import UserManagement from '@/apps/admin/pages/users'
-import AssetManager from '@/apps/admin/pages/assets'
-import AdminSettings from '@/apps/admin/pages/settings'
-import ClientPortfolio from '@/apps/client/pages/portfolio'
+// Layouts (Lazy)
+const PilotLayout = React.lazy(() => import('@/apps/pilot/layout'))
+const ClientLayout = React.lazy(() => import('@/apps/client/layout'))
+const AdminLayout = React.lazy(() => import('@/apps/admin/layout'))
 
-// ... existing imports ...
+// Pages (Lazy)
+const PilotDashboard = React.lazy(() => import('@/apps/pilot/pages/dashboard'))
+const JobExecution = React.lazy(() => import('@/apps/pilot/pages/job-execution'))
+const AdminDashboard = React.lazy(() => import('@/apps/admin/pages/dashboard'))
+const OpsDashboard = React.lazy(() => import('@/apps/admin/pages/ops'))
+const UserManagement = React.lazy(() => import('@/apps/admin/pages/users'))
+const AssetManager = React.lazy(() => import('@/apps/admin/pages/assets'))
+const AdminSettings = React.lazy(() => import('@/apps/admin/pages/settings'))
+const ClientPortfolio = React.lazy(() => import('@/apps/client/pages/portfolio'))
+const ClientSiteView = React.lazy(() => import('@/apps/client/pages/site-view'))
+const ClientProfile = React.lazy(() => import('@/apps/client/pages/profile'))
+const ClientSettings = React.lazy(() => import('@/apps/client/pages/settings'))
+const ClientBooking = React.lazy(() => import('@/apps/client/pages/booking'))
+const ClientReports = React.lazy(() => import('@/apps/client/pages/reports'))
+const ClientNotifications = React.lazy(() => import('@/apps/client/pages/notifications'))
+const ErrorPage = React.lazy(() => import('@/core/components/error-page'))
 
-// ... inside router ...
+// Named export lazy loading helper
+const ClientDashboard = React.lazy(() => import('@/apps/client/components/dashboard').then(m => ({ default: m.ClientDashboard })))
 
-import ClientSiteView from '@/apps/client/pages/site-view'
-import { ClientDashboard } from '@/apps/client/components/dashboard'
-import ClientProfile from '@/apps/client/pages/profile'
-import ClientSettings from '@/apps/client/pages/settings'
-import ClientBooking from '@/apps/client/pages/booking'
-import ClientReports from '@/apps/client/pages/reports'
-import ClientNotifications from '@/apps/client/pages/notifications'
-
-// Placeholder Pages (Inlined for speed, normally separate)
-// const ClientDash = () => <div>Client Dashboard (Map View)</div> // This is removed as ClientPortfolio is used instead
+const LoadingFallback = () => (
+    <div className="h-screen w-full flex items-center justify-center bg-background">
+        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+)
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div className="p-10"><h1>Vyooma Core</h1><p>Select Portal:</p><ul><li><a href="/pilot" className="text-blue-500 underline">Pilot</a></li><li><a href="/client" className="text-blue-500 underline">Client</a></li><li><a href="/admin" className="text-blue-500 underline">Admin</a></li></ul></div>,
-        errorElement: <ErrorPage />
+        element: (
+            <div className="p-10 font-sans">
+                <SkipToContent />
+                <h1 className="text-4xl font-black mb-4 tracking-tighter">Vyooma Core</h1>
+                <p className="text-muted-foreground mb-8">Select Portal Gateway:</p>
+                <div className="flex gap-4">
+                    <a href="/pilot" className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-bold shadow-xl">Pilot Portal</a>
+                    <a href="/client" className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-bold shadow-xl">Client Hub</a>
+                    <a href="/admin" className="px-6 py-3 bg-accent text-accent-foreground border border-border rounded-lg font-bold shadow-xl">Global Admin</a>
+                </div>
+            </div>
+        ),
+        errorElement: <React.Suspense fallback={<LoadingFallback />}><ErrorPage /></React.Suspense>
     },
     {
         path: "/pilot",
-        element: <PilotLayout />,
+        element: <React.Suspense fallback={<LoadingFallback />}><PilotLayout /></React.Suspense>,
         children: [
             { index: true, element: <Navigate to="/pilot/dashboard" replace /> },
             { path: "dashboard", element: <PilotDashboard /> },
@@ -50,10 +65,10 @@ const router = createBrowserRouter([
     },
     {
         path: "/client",
-        element: <ClientLayout />,
+        element: <React.Suspense fallback={<LoadingFallback />}><ClientLayout /></React.Suspense>,
         children: [
             { index: true, element: <Navigate to="/client/dashboard" replace /> },
-            { path: "dashboard", element: <ClientDashboard /> },
+            { path: "dashboard", element: <React.Suspense fallback={<LoadingFallback />}><ClientDashboard /></React.Suspense> },
             { path: "portfolio", element: <ClientPortfolio /> },
             { path: "profile", element: <ClientProfile /> },
             { path: "settings", element: <ClientSettings /> },
@@ -66,7 +81,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <React.Suspense fallback={<LoadingFallback />}><AdminLayout /></React.Suspense>,
         children: [
             { index: true, element: <Navigate to="/admin/dashboard" replace /> },
             { path: "dashboard", element: <AdminDashboard /> },
@@ -80,6 +95,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <ErrorBoundary name="Global App Shell">
+            <RouterProvider router={router} />
+        </ErrorBoundary>
     </React.StrictMode>,
 )

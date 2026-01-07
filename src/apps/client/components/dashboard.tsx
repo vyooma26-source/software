@@ -1,128 +1,252 @@
-import { FileText, Plus, Activity, Zap, TrendingUp } from 'lucide-react';
-import { MOCK_ANALYTICS_TRENDS } from '@/core/data/mock-user';
-import { StatCard } from '@/core/components/stat-card';
+import { Activity, AlertTriangle, CheckCircle, FileText, TrendingUp, Sun, Shield } from 'lucide-react';
+import { Card } from '@/core/ui/card';
+import { Badge } from '@/core/ui/badge';
 import { useNavigate } from 'react-router-dom';
 
 export function ClientDashboard() {
     const navigate = useNavigate();
 
     return (
-        <div className="h-full flex flex-col gap-4">
+        <div className="h-full overflow-hidden">
+            {/* DASHBOARD CONTENT - Baseline aligned layout */}
+            <div className="grid grid-cols-12 gap-4 h-full">
 
-            {/* Top Row: Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <StatCard
-                    title="Fleet Health"
-                    value="94%"
-                    icon={Activity}
-                    trend={{ value: 2.1, label: 'vs last week', direction: 'up' }}
-                />
-                <StatCard
-                    title="Active Inspections"
-                    value="12"
-                    icon={Zap}
-                    trend={{ value: 4, label: 'currently flying', direction: 'neutral' }}
-                />
-                <StatCard
-                    title="Total Capacity"
-                    value="1.2 GW"
-                    icon={TrendingUp}
-                    trend={{ value: 12, label: 'capacity increase', direction: 'up' }}
-                />
-                <div className="bg-primary rounded-lg p-6 flex flex-col justify-between text-primary-foreground relative overflow-hidden group cursor-pointer hover:shadow-xl hover:translate-y-[-2px] transition-all"
-                    onClick={() => navigate('/client/booking')}
-                >
-                    <div className="relative z-10">
-                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4 backdrop-blur-md border border-white/30">
-                            <Plus size={28} />
+                {/* LEFT COLUMN - 8 cols */}
+                <div className="col-span-8 grid grid-rows-[120px_auto_1fr] gap-4 h-full">
+
+                    {/* ROW 1: Hero */}
+                    <div className="relative bg-white/95 rounded-[2rem] overflow-hidden shadow-lg border border-[#d3ccb5]/40">
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLW9wYWNpdHk9IjAuMDMiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-40" />
+
+                        <div className="relative h-full flex items-center justify-between px-6">
+                            <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <Sun className="w-4 h-4 text-yellow-600" />
+                                    <span className="text-[9px] font-bold uppercase tracking-wider text-[#8c8570]">Solar Portfolio</span>
+                                </div>
+                                <h2 className="text-2xl font-black tracking-tight text-[#2a261c] mb-1">
+                                    Plant Health Dashboard
+                                </h2>
+                                <p className="text-xs text-[#8c8570]">Real-time inspection results</p>
+                            </div>
+
+                            <div className="flex items-center gap-8">
+                                <div className="flex flex-col items-center">
+                                    <span className="text-2xl font-black text-[#2a261c]">4</span>
+                                    <span className="text-[9px] text-[#8c8570] font-bold uppercase tracking-wider">Sites</span>
+                                </div>
+                                <div className="flex flex-col items-center">
+                                    <span className="text-2xl font-black text-green-600">847 MW</span>
+                                    <span className="text-[9px] text-[#8c8570] font-bold uppercase tracking-wider">Capacity</span>
+                                </div>
+                                <div className="flex flex-col items-center">
+                                    <span className="text-2xl font-black text-[#2a261c]">94.2%</span>
+                                    <span className="text-[9px] text-[#8c8570] font-bold uppercase tracking-wider">Health</span>
+                                </div>
+                            </div>
                         </div>
-                        <h3 className="text-xl font-bold">Book Flight</h3>
-                        <p className="text-primary-foreground/90 text-sm mt-1">Schedule new inspection</p>
                     </div>
-                    {/* Decorative */}
-                    <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all" />
+
+                    {/* ROW 2: Vyooma Benefits + Monthly Trend */}
+                    <div className="grid grid-cols-2 gap-4">
+                        {/* Vyooma Benefits - BLUE HIGHLIGHT */}
+                        <Card className="bg-gradient-to-br from-[#2d4a7c] to-[#1e3557] border-blue-900/20 rounded-[1.5rem] p-4 shadow-lg text-white">
+                            <div className="flex items-center gap-2 mb-3">
+                                <TrendingUp className="w-4 h-4 text-blue-300" />
+                                <h4 className="text-sm font-black">Benefits with Vyooma</h4>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2.5">
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-green-300">₹12.4L</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Saved</div>
+                                </div>
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-white">₹2.4L</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Per MW</div>
+                                </div>
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-blue-300">18.7%</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Gain</div>
+                                </div>
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-yellow-300">&lt;48hr</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Reports</div>
+                                </div>
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-white">127h</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Flight</div>
+                                </div>
+                                <div className="text-center bg-white/15 rounded-lg p-2 hover:bg-white/20 transition-colors cursor-pointer">
+                                    <div className="text-base font-black text-red-300">342</div>
+                                    <div className="text-[7px] text-blue-100 font-bold uppercase tracking-wider mt-0.5">Defects</div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        {/* Monthly Savings Trend */}
+                        <Card className="bg-white/95 border-[#d3ccb5]/40 rounded-[1.5rem] p-4 shadow-md">
+                            <div className="flex items-center justify-between mb-3">
+                                <h4 className="text-sm font-black text-[#2a261c]">Monthly Savings</h4>
+                                <Badge className="text-[7px] bg-green-100 text-green-700 border-green-200">+24%</Badge>
+                            </div>
+                            <div className="h-28 flex items-end justify-between gap-2">
+                                {[
+                                    { month: 'Jan', value: 60, label: '₹1.8L', height: 48 },
+                                    { month: 'Feb', value: 75, label: '₹2.2L', height: 60 },
+                                    { month: 'Mar', value: 55, label: '₹1.8L', height: 44 },
+                                    { month: 'Apr', value: 85, label: '₹2.5L', height: 68 },
+                                    { month: 'May', value: 90, label: '₹2.7L', height: 72 },
+                                    { month: 'Jun', value: 100, label: '₹3.0L', height: 80 }
+                                ].map((bar, i) => (
+                                    <div key={i} className="flex-1 flex flex-col items-center gap-1.5 group cursor-pointer">
+                                        <div className="relative w-full flex flex-col items-center">
+                                            <div
+                                                className="w-full bg-gradient-to-t from-[#2d4a7c] to-[#4a6fa8] rounded-t-md transition-all hover:from-[#1e3557] hover:to-[#2d4a7c] shadow-sm"
+                                                style={{ height: `${bar.height}px` }}
+                                            />
+                                            <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#2a261c] text-white text-[7px] font-bold px-2 py-1 rounded whitespace-nowrap z-10 shadow-lg">
+                                                {bar.label}
+                                            </div>
+                                        </div>
+                                        <span className="text-[8px] font-bold text-[#8c8570]">{bar.month}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+                    </div>
+
+                    {/* ROW 3: Plant Health Overview */}
+                    <Card className="bg-white/95 border-[#d3ccb5]/40 rounded-[1.5rem] p-4 shadow-md">
+                        <div className="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 className="text-sm font-black text-[#2a261c]">Plant Health Overview</h3>
+                                <p className="text-[8px] text-[#8c8570] font-bold uppercase tracking-wider">Latest Results</p>
+                            </div>
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-100 rounded-full">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                                <span className="text-[8px] font-bold text-green-700">All Monitored</span>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-5 gap-2.5">
+                            <div className="flex flex-col items-center p-2 bg-white/60 rounded-lg hover:bg-white transition-colors cursor-pointer">
+                                <CheckCircle className="w-4 h-4 text-green-600 mb-1" />
+                                <span className="text-xl font-black text-[#2a261c]">3</span>
+                                <span className="text-[7px] text-[#8c8570] font-bold uppercase tracking-wider text-center">Healthy</span>
+                            </div>
+
+                            <div className="flex flex-col items-center p-2 bg-white/60 rounded-lg hover:bg-white transition-colors cursor-pointer">
+                                <AlertTriangle className="w-4 h-4 text-orange-600 mb-1" />
+                                <span className="text-xl font-black text-[#2a261c]">1</span>
+                                <span className="text-[7px] text-[#8c8570] font-bold uppercase tracking-wider text-center">Attention</span>
+                            </div>
+
+                            <div className="flex flex-col items-center p-2 bg-white/60 rounded-lg hover:bg-white transition-colors cursor-pointer" onClick={() => navigate('/client/reports')}>
+                                <FileText className="w-4 h-4 text-blue-600 mb-1" />
+                                <span className="text-xl font-black text-[#2a261c]">12</span>
+                                <span className="text-[7px] text-[#8c8570] font-bold uppercase tracking-wider text-center">Inspections</span>
+                            </div>
+
+                            <div className="flex flex-col items-center p-2 bg-white/60 rounded-lg hover:bg-white transition-colors cursor-pointer">
+                                <AlertTriangle className="w-4 h-4 text-red-600 mb-1" />
+                                <span className="text-xl font-black text-[#2a261c]">8</span>
+                                <span className="text-[7px] text-[#8c8570] font-bold uppercase tracking-wider text-center">Defect Types</span>
+                            </div>
+
+                            <div className="flex flex-col items-center p-2 bg-white/60 rounded-lg hover:bg-white transition-colors cursor-pointer" onClick={() => navigate('/client/reports')}>
+                                <Shield className="w-4 h-4 text-purple-600 mb-1" />
+                                <span className="text-xl font-black text-[#2a261c]">342</span>
+                                <span className="text-[7px] text-[#8c8570] font-bold uppercase tracking-wider text-center">Panels</span>
+                            </div>
+                        </div>
+                    </Card>
                 </div>
-            </div>
 
-            {/* Main Content Area */}
-            <div className="grid grid-cols-12 gap-4 flex-1 min-h-0">
-                {/* Left Column: Analytics / Map (Placeholder) */}
-                <div className="col-span-12 lg:col-span-8 bg-card rounded-lg p-6 relative overflow-hidden group border border-border/50">
-                    <div className="absolute top-6 left-6 z-10">
-                        <h2 className="text-2xl font-black tracking-tight text-primary uppercase">System Analytics</h2>
-                        <p className="text-muted-foreground mt-0.5 text-[10px] font-medium uppercase tracking-widest">Real-time solar performance tracking</p>
-                    </div>
+                {/* RIGHT COLUMN - 4 cols */}
+                <div className="col-span-4 grid grid-rows-[1fr_auto] gap-4 h-full">
 
-                    {/* Simple Bar Chart Visualization */}
-                    <div className="absolute inset-0 flex items-end justify-between px-8 pb-8 pt-24 gap-2">
-                        {MOCK_ANALYTICS_TRENDS.map((item, i) => (
-                            <div key={i} className="flex-1 flex flex-col items-center group/bar">
-                                <div
-                                    className="w-full bg-primary/20 rounded-t-lg group-hover/bar:bg-primary/40 transition-all relative"
-                                    style={{ height: `${(item.energy / 1500) * 100}%` }}
-                                >
-                                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap">
-                                        {item.energy} kWh
+                    {/* Site Performance */}
+                    <Card className="bg-white/95 border-[#d3ccb5]/40 rounded-[1.5rem] p-4 shadow-md">
+                        <h3 className="text-sm font-black text-[#2a261c] mb-3">Site Performance</h3>
+
+                        <div className="space-y-2.5">
+                            <div className="p-2.5 bg-white/60 rounded-lg cursor-pointer hover:bg-white transition-colors" onClick={() => navigate('/client/sites/101')}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] font-bold text-[#2a261c]">Nevada Solar One</span>
+                                    <Badge variant="success" className="text-[7px] px-1.5 py-0">Healthy</Badge>
+                                </div>
+                                <div className="flex items-center justify-between mb-0.5">
+                                    <span className="text-[8px] text-[#8c8570] font-bold uppercase tracking-wider">Health</span>
+                                    <span className="text-xs font-black text-[#2a261c]">94%</span>
+                                </div>
+                                <div className="w-full h-1 bg-white rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style={{ width: '94%' }} />
+                                </div>
+                            </div>
+
+                            <div className="p-2.5 bg-white/60 rounded-lg cursor-pointer hover:bg-white transition-colors" onClick={() => navigate('/client/sites/103')}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] font-bold text-[#2a261c]">Desert Sunlight</span>
+                                    <Badge variant="success" className="text-[7px] px-1.5 py-0">Healthy</Badge>
+                                </div>
+                                <div className="flex items-center justify-between mb-0.5">
+                                    <span className="text-[8px] text-[#8c8570] font-bold uppercase tracking-wider">Health</span>
+                                    <span className="text-xs font-black text-[#2a261c]">88%</span>
+                                </div>
+                                <div className="w-full h-1 bg-white rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style={{ width: '88%' }} />
+                                </div>
+                            </div>
+
+                            <div className="p-2.5 bg-white/60 rounded-lg cursor-pointer hover:bg-white transition-colors" onClick={() => navigate('/client/sites/102')}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-[10px] font-bold text-[#2a261c]">Kamakura Plant</span>
+                                    <Badge variant="warning" className="text-[7px] px-1.5 py-0">Attention</Badge>
+                                </div>
+                                <div className="flex items-center justify-between mb-0.5">
+                                    <span className="text-[8px] text-[#8c8570] font-bold uppercase tracking-wider">Health</span>
+                                    <span className="text-xs font-black text-[#2a261c]">78%</span>
+                                </div>
+                                <div className="w-full h-1 bg-white rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full" style={{ width: '78%' }} />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Quick Actions */}
+                    <Card className="bg-white/95 border-[#d3ccb5]/40 rounded-[1.5rem] p-4 shadow-md">
+                        <h3 className="text-sm font-black text-[#2a261c] mb-3">Quick Actions</h3>
+                        <div className="space-y-2">
+                            <button onClick={() => navigate('/client/reports')} className="w-full p-2.5 bg-white/60 hover:bg-white rounded-lg text-left transition-colors group">
+                                <div className="flex items-center gap-2.5">
+                                    <FileText className="w-3.5 h-3.5 text-[#8c8570] group-hover:text-[#2a261c]" />
+                                    <div className="flex-1">
+                                        <div className="text-xs font-black text-[#2a261c]">View Reports</div>
+                                        <div className="text-[8px] text-[#8c8570] font-bold">12 available</div>
                                     </div>
                                 </div>
-                                <span className="text-[10px] mt-4 text-muted-foreground font-medium uppercase tracking-tighter">{item.month}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Right Column (Widgets) */}
-                <div className="col-span-12 lg:col-span-4 flex flex-col gap-4">
-                    {/* Recent Report Widget */}
-                    <div className="bg-card rounded-lg p-6 flex-1 relative group cursor-pointer hover:bg-card/80 transition-colors"
-                        onClick={() => navigate('/client/reports')}
-                    >
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-xl font-medium">Recent<br />Reports</h3>
-                            <div className="p-2 bg-secondary rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                <FileText size={20} />
-                            </div>
-                        </div>
-                        <div className="space-y-3 mt-4">
-                            <div className="h-14 w-full bg-primary/5 rounded-lg flex items-center px-4 border border-primary/10">
-                                <FileText size={18} className="mr-3 text-primary" />
-                                <div>
-                                    <p className="text-sm font-bold">Q3 Inspection.pdf</p>
-                                    <p className="text-[10px] text-muted-foreground">Generated 2 days ago</p>
+                            </button>
+                            <button onClick={() => navigate('/client/portfolio')} className="w-full p-2.5 bg-white/60 hover:bg-white rounded-lg text-left transition-colors group">
+                                <div className="flex items-center gap-2.5">
+                                    <Sun className="w-3.5 h-3.5 text-[#8c8570] group-hover:text-[#2a261c]" />
+                                    <div className="flex-1">
+                                        <div className="text-xs font-black text-[#2a261c]">Plant Portfolio</div>
+                                        <div className="text-[8px] text-[#8c8570] font-bold">4 active sites</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="h-14 w-full bg-card rounded-lg flex items-center px-4 border border-border/50 opacity-60">
-                                <FileText size={18} className="mr-3 text-muted-foreground" />
-                                <div>
-                                    <p className="text-sm font-medium">Nevada Site A.pdf</p>
-                                    <p className="text-[10px] text-muted-foreground">Generated 1 week ago</p>
+                            </button>
+                            <button onClick={() => navigate('/client/booking')} className="w-full p-2.5 bg-white/60 hover:bg-white rounded-lg text-left transition-colors group">
+                                <div className="flex items-center gap-2.5">
+                                    <Activity className="w-3.5 h-3.5 text-[#8c8570] group-hover:text-[#2a261c]" />
+                                    <div className="flex-1">
+                                        <div className="text-xs font-black text-[#2a261c]">Book Inspection</div>
+                                        <div className="text-[8px] text-[#8c8570] font-bold">Schedule new</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </button>
                         </div>
-                    </div>
-
-                    {/* Asset Health Widget */}
-                    <div className="bg-card rounded-lg p-6 flex-1 relative group cursor-pointer hover:bg-card/80 transition-colors"
-                        onClick={() => navigate('/client/portfolio')}
-                    >
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-xl font-medium">Fleet<br />Health</h3>
-                            <div className="p-2 bg-secondary rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                <Activity size={20} />
-                            </div>
-                        </div>
-                        <div className="mt-4 flex items-center justify-center">
-                            <div className="relative w-28 h-28">
-                                <svg className="transform -rotate-90 w-28 h-28">
-                                    <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-primary/10" />
-                                    <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="301.6" strokeDashoffset="30" className="text-secondary" />
-                                </svg>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-xl font-bold text-secondary">94%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </Card>
                 </div>
             </div>
         </div>

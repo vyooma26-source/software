@@ -33,39 +33,38 @@ export default function JobExecution() {
     }, [status]);
 
     return (
-        <div className="h-full flex flex-col bg-black text-white p-4 overflow-hidden">
+        <div className="h-full flex flex-col bg-background text-foreground p-4 overflow-hidden selection:bg-primary/30">
             {/* HUD Header */}
-            <div className="flex justify-between items-center mb-4 bg-card/60 rounded px-4 py-2 border border-white/10 backdrop-blur-sm">
+            <div className="flex justify-between items-center mb-4 bg-card/80 rounded-xl px-6 py-4 border border-border backdrop-blur-xl shadow-2xl">
                 <div className="flex items-center gap-4">
-                    <Button variant="outline" size="icon" onClick={() => navigate('/pilot/dashboard')} className="border-white/20 text-white hover:bg-white/10">
+                    <Button variant="outline" size="icon" onClick={() => navigate('/pilot/dashboard')} className="border-border hover:bg-accent">
                         <ArrowLeft className="w-5 h-5" />
                     </Button>
                     <div>
-                        <h2 className="font-bold text-lg leading-none">{job.asset_name}</h2>
-                        <span className="text-xs font-mono text-primary">{job.id}</span>
+                        <h2 className="heading-3">{job.asset_name}</h2>
+                        <span className="text-[10px] font-mono text-primary uppercase tracking-widest opacity-80">{job.id}</span>
                     </div>
                 </div>
 
-                {/* Central Status Indicator */}
-                <div className={`px-6 py-1 rounded border-2 font-bold uppercase tracking-widest ${status === 'flying' ? 'border-primary text-primary animate-pulse' :
-                    status === 'preflight' ? 'border-muted text-muted-foreground' : 'border-white text-white'
+                <div className={`px-6 py-1.5 rounded-full border-2 font-black text-xs uppercase tracking-[0.2em] shadow-lg ${status === 'flying' ? 'border-primary text-primary bg-primary/5 animate-pulse' :
+                    status === 'preflight' ? 'border-muted text-muted-foreground' : 'border-foreground text-foreground'
                     }`}>
                     {status}
                 </div>
 
-                <div className="flex gap-6 font-mono text-xs">
+                <div className="flex gap-8 font-mono">
                     <div className="flex flex-col items-center">
-                        <span className="text-muted-foreground">FLIGHT TIME</span>
-                        <span className="text-xl font-bold">12:34</span>
+                        <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">FLIGHT TIME</span>
+                        <span className="text-2xl font-black text-foreground">12:34</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="text-muted-foreground">DISTANCE</span>
-                        <span className="text-xl font-bold">1.2km</span>
+                        <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">DISTANCE</span>
+                        <span className="text-2xl font-black text-foreground">1.2km</span>
                     </div>
                 </div>
             </div>
 
-            <div className="flex-1 rounded-2xl overflow-hidden relative border border-white/10 bg-slate-900 group">
+            <div className="flex-1 rounded-2xl overflow-hidden relative border border-border bg-muted/10 group shadow-inner">
                 {/* Visualizer / Map Placeholder */}
                 <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1473862170180-84427c485aca?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center" />
 
@@ -79,10 +78,10 @@ export default function JobExecution() {
 
                 {/* Pre-flight Checklist Overlay */}
                 {status === 'preflight' && (
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-                        <Card className="w-[500px] border-primary/50 bg-black">
-                            <div className="p-6 border-b border-white/10 flex justify-between items-center">
-                                <h3 className="text-xl font-bold text-white uppercase tracking-wider">Pre-Flight Safety Check</h3>
+                    <div className="absolute inset-0 bg-background/90 backdrop-blur-md flex items-center justify-center z-50">
+                        <Card className="w-[500px] border-primary/30 shadow-2xl">
+                            <div className="p-8 border-b border-border flex justify-between items-center">
+                                <h3 className="heading-2 uppercase tracking-widest">Pre-Flight Safety Check</h3>
                                 <AlertTriangle className="text-primary animate-pulse" />
                             </div>
                             <div className="p-6 space-y-3">
@@ -92,10 +91,10 @@ export default function JobExecution() {
                                 <CheckItem label="GPS Lock (>12 Satellites)" checked={true} />
                                 <CheckItem label="IMU/Compass Calibration" checked={checklistComplete} />
                             </div>
-                            <div className="p-6 border-t border-white/10 flex justify-end gap-3">
-                                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">Abort</Button>
+                            <div className="p-8 border-t border-border flex justify-end gap-3">
+                                <Button variant="outline" className="font-bold">Abort</Button>
                                 <Button
-                                    className="bg-primary text-black hover:bg-primary/90 font-bold"
+                                    className="font-bold min-w-[160px]"
                                     onClick={() => {
                                         setChecklistComplete(true);
                                         setTimeout(() => setStatus('arming'), 500);
@@ -119,28 +118,28 @@ export default function JobExecution() {
                 <div className="absolute top-4 right-4 flex gap-4 pointer-events-none">
                     <div className={`flex items-center gap-2 ${telemetry.battery_level < 20 ? 'text-destructive animate-pulse' : 'text-success'}`}>
                         <Battery size={20} />
-                        <span className="font-bold text-xl">{telemetry.battery_level.toFixed(0)}%</span>
+                        <span className="font-black text-2xl">{telemetry.battery_level.toFixed(0)}%</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white">
+                    <div className="flex items-center gap-2 text-foreground">
                         <Wifi size={20} />
-                        <span className="font-bold text-xl">{telemetry.signal_strength}%</span>
+                        <span className="font-black text-2xl">{telemetry.signal_strength}%</span>
                     </div>
                 </div>
             </div>
 
             {/* Bottom Controls */}
-            <div className="h-24 bg-card border-t border-white/10 mt-4 flex items-center justify-between px-8">
+            <div className="h-28 bg-card border-t border-border mt-4 flex items-center justify-between px-10 shadow-lg rounded-t-2xl">
                 {/* Camera / Gimbal */}
-                <div className="flex gap-4">
+                <div className="flex gap-8">
                     <div className="flex flex-col">
-                        <span className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Camera</span>
-                        <Badge variant="outline" className="font-mono text-white border-white/20">{telemetry.camera_mode}</Badge>
+                        <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1.5 leading-none">Camera</span>
+                        <Badge variant="secondary" className="font-mono px-3 py-1">{telemetry.camera_mode}</Badge>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Waypoints</span>
-                        <div className="flex items-end gap-1 font-mono">
-                            <span className="text-xl font-bold text-primary">{telemetry.current_waypoint}</span>
-                            <span className="text-sm text-muted-foreground">/ {telemetry.total_waypoints}</span>
+                        <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-black mb-1.5 leading-none">Waypoints</span>
+                        <div className="flex items-end gap-1.5 font-mono">
+                            <span className="text-2xl font-black text-primary leading-none">{telemetry.current_waypoint}</span>
+                            <span className="text-sm text-muted-foreground leading-none">/ {telemetry.total_waypoints}</span>
                         </div>
                     </div>
                 </div>
@@ -148,23 +147,23 @@ export default function JobExecution() {
                 {/* Flight Action Buttons */}
                 <div className="flex gap-4">
                     {status === 'arming' && (
-                        <Button size="lg" className="w-48 bg-primary text-black font-bold uppercase tracking-wider hover:bg-primary/90" onClick={() => setStatus('flying')}>
+                        <Button size="xl" className="w-56 font-black uppercase tracking-widest shadow-xl shadow-primary/20" onClick={() => setStatus('flying')}>
                             Takeoff
                         </Button>
                     )}
                     {status === 'flying' && (
                         <>
-                            <Button size="icon" variant="outline" className="h-12 w-12 border-white/20 rounded-full hover:bg-white/10 text-white" onClick={() => setStatus('paused')}>
-                                <Pause fill="currentColor" />
+                            <Button size="icon" variant="outline" className="h-14 w-14 border-border rounded-full hover:bg-accent transition-all" onClick={() => setStatus('paused')}>
+                                <Pause fill="currentColor" className="w-6 h-6" />
                             </Button>
-                            <Button size="lg" variant="destructive" className="w-48 font-bold uppercase tracking-wider animate-pulse border-red-500" onClick={() => setStatus('landing')}>
-                                <Square fill="currentColor" className="mr-2 h-4 w-4" /> Return to Home
+                            <Button size="xl" variant="destructive" className="w-56 font-black uppercase tracking-widest animate-pulse" onClick={() => setStatus('landing')}>
+                                <Square fill="currentColor" className="mr-2 h-5 w-5" /> Return home
                             </Button>
                         </>
                     )}
                     {status === 'paused' && (
-                        <Button size="lg" className="w-48 bg-primary text-black font-bold uppercase tracking-wider hover:bg-primary/90" onClick={() => setStatus('flying')}>
-                            <Play fill="currentColor" className="mr-2 h-4 w-4" /> Resume
+                        <Button size="xl" className="w-56 font-black uppercase tracking-widest" onClick={() => setStatus('flying')}>
+                            <Play fill="currentColor" className="mr-2 h-5 w-5" /> Resume
                         </Button>
                     )}
                 </div>
@@ -175,11 +174,11 @@ export default function JobExecution() {
 
 function CheckItem({ label, checked }: { label: string, checked: boolean }) {
     return (
-        <div className="flex items-center gap-3 p-3 rounded bg-white/5 border border-white/5 cursor-pointer hover:bg-white/10 transition-colors">
-            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${checked ? 'bg-success border-success' : 'border-muted'}`}>
-                {checked && <CheckCircle size={14} className="text-black" />}
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 border border-border/50 cursor-pointer hover:bg-muted transition-all">
+            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${checked ? 'bg-success border-success' : 'border-muted-foreground/30'}`}>
+                {checked && <CheckCircle size={14} className="text-success-foreground" />}
             </div>
-            <span className="text-sm font-medium text-white">{label}</span>
+            <span className="text-sm font-semibold text-foreground">{label}</span>
         </div>
     )
 }

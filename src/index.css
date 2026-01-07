@@ -14,10 +14,6 @@
   }
 }
 
-.animate-page-fade {
-  animation: fade-in 0.3s ease-out forwards;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -36,10 +32,17 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 142 71% 95%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
+    --info: 221 83% 53%;
+    --info-foreground: 221 83% 95%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --radius: 2.5rem;
+    --sidebar-width: 5rem;
   }
 
   .dark {
@@ -59,6 +62,10 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 142 71% 5%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -67,19 +74,14 @@
   /* Shared Application Themes */
   .theme-client-premium {
     --background: 35 29% 83%;
-    /* Sand #E0D6C8 */
     --foreground: 129 28% 15%;
-    /* Dark Forest/Black for text */
     --card: 35 29% 88%;
-    /* Lighter Sand */
     --card-foreground: 129 28% 15%;
     --popover: 35 29% 90%;
     --popover-foreground: 129 28% 15%;
     --primary: 216 38% 47%;
-    /* Blue #4A6FA5 */
     --primary-foreground: 0 0% 100%;
     --secondary: 130 27% 29%;
-    /* Forest #355E3B */
     --secondary-foreground: 0 0% 100%;
     --muted: 35 20% 75%;
     --muted-foreground: 129 15% 40%;
@@ -87,6 +89,10 @@
     --accent-foreground: 216 38% 30%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
+    --success: 130 27% 29%;
+    --success-foreground: 35 29% 95%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
     --border: 35 20% 70%;
     --input: 35 20% 75%;
     --ring: 216 38% 47%;
@@ -101,7 +107,6 @@
     --popover: 240 10% 5%;
     --popover-foreground: 0 0% 100%;
     --primary: 48 96% 53%;
-    /* Pilot High-Viz Yellow */
     --primary-foreground: 240 10% 4%;
     --secondary: 240 10% 10%;
     --secondary-foreground: 0 0% 100%;
@@ -111,6 +116,10 @@
     --accent-foreground: 240 10% 4%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 240 10% 4%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
     --border: 240 10% 12%;
     --input: 240 10% 12%;
     --ring: 48 96% 53%;
@@ -122,27 +131,85 @@
     --background: 240 10% 4%;
     --foreground: 0 0% 100%;
     --card: 240 10% 6%;
-    --border: 240 10% 12%;
+    --card-foreground: 0 0% 100%;
     --primary: 48 96% 53%;
-    /* High-viz Yellow */
     --primary-foreground: 0 0% 10%;
-    --success: 142 71% 45%;
-    --warning: 38 92% 50%;
+    --secondary: 240 10% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 10% 12%;
+    --muted-foreground: 240 5% 60%;
+    --accent: 48 96% 53%;
+    --accent-foreground: 240 10% 4%;
     --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 240 10% 4%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
+    --border: 240 10% 12%;
+    --input: 240 10% 12%;
+    --ring: 48 96% 53%;
+    --radius: 2.5rem;
   }
 
   .theme-admin {
     --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --border: 214 32% 91%;
-    --primary: 221 83% 53%;
-    /* Royal Blue */
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 142 71% 95%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 38 92% 5%;
+    --info: 221.2 83.2% 53.3%;
+    --info-foreground: 221.2 83.2% 95%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
     --radius: 2.5rem;
+    --sidebar-width: 16rem;
+  }
+
+  /* Accessibility: Focus Indicators */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Skip to Content Utility */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[700] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:shadow-2xl;
   }
 }
 
+.animate-page-fade {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
 @layer utilities {
+  .heading-1 {
+    @apply text-4xl font-bold tracking-tight text-foreground;
+  }
+
+  .heading-2 {
+    @apply text-2xl font-bold tracking-tight text-foreground;
+  }
+
+  .heading-3 {
+    @apply text-xl font-bold tracking-tight text-foreground;
+  }
+
   .bg-glass {
     @apply bg-white/5 backdrop-blur-md border border-white/10;
   }
@@ -165,5 +232,73 @@
     50% {
       opacity: .7;
     }
+  }
+
+  /* Cutout Tab System - Latte Theme Refinement */
+  .vyooma-frame-latte {
+    background-color: #e5dec9;
+    /* Sampled warm beige from Latte inspiration */
+  }
+
+  /* Robust Box-Shadow Inverted Corners (No pixelation) */
+  .vyooma-inv-corner {
+    position: absolute;
+    width: 3.5rem;
+    /* Increased radius for smoother, rounder look */
+    height: 3.5rem;
+    background: transparent;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Top Right Inverted Junction */
+  .vyooma-inv-tr-h {
+    top: 0;
+    right: 22rem;
+    /* Exact alignment with tab width */
+    border-top-right-radius: 3.5rem;
+    box-shadow: 1.5rem -1.5rem 0 1.5rem #e5dec9;
+    /* Pushes Latte color upwards and rightwards */
+  }
+
+  /* This vertical one might be redundant if the clip-path is good, but keeping for smooth join */
+  .vyooma-inv-tr-v {
+    display: none;
+    /* Removing the vertical patch as it causes double-layering artifacts */
+  }
+
+  /* Bottom Left Inverted Junction */
+  .vyooma-inv-bl-h {
+    bottom: 0;
+    left: 23rem;
+    /* Exact alignment with tab width */
+    border-bottom-left-radius: 3.5rem;
+    box-shadow: -1.5rem 1.5rem 0 1.5rem #e5dec9;
+    /* Pushes Latte color downwards and leftwards */
+  }
+
+  .vyooma-inv-bl-v {
+    display: none;
+  }
+
+  .vyooma-pill-shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  .vyooma-stat-pill {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+  }
+
+  /* Slanted "Slashes" Button Style */
+  .vyooma-skew-btn {
+    transform: skewX(-20deg);
+    transition: all 0.2s ease;
+  }
+
+  .vyooma-skew-btn>* {
+    transform: skewX(20deg);
+    /* Counter-skew content */
   }
 }

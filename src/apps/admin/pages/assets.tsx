@@ -6,13 +6,25 @@ import { Button } from '@/core/ui/button';
 import { Input } from '@/core/ui/input';
 import { MOCK_ASSETS } from '@/core/data/mock-assets';
 
+import { useAuth } from "@/core/hooks/use-auth"
+import { PermissionGate } from "@/core/components/auth/permission-gate"
+import { PageHeader } from "@/core/components/page-header"
+
 export default function AssetManager() {
+    const { role } = useAuth();
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold tracking-tight">Asset Management</h1>
-                <Button><Plus className="w-4 h-4 mr-2" /> Add Asset</Button>
-            </div>
+            <PageHeader
+                title="Asset Fleet"
+                subtitle="Global inventory & telemetry status"
+                actions={
+                    <PermissionGate allowedRoles={['admin']} currentRole={role}>
+                        <Button className="font-bold shadow-xl hover:shadow-primary/20">
+                            <Plus className="w-4 h-4 mr-2" /> Add Asset
+                        </Button>
+                    </PermissionGate>
+                }
+            />
 
             <div className="flex items-center gap-4 mb-2">
                 <div className="relative flex-1 max-w-sm">

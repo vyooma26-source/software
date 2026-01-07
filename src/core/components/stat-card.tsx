@@ -26,7 +26,7 @@ export function StatCard({
     className
 }: StatCardProps) {
     return (
-        <Card variant={variant} className={cn("relative overflow-hidden group transition-all hover:bg-card/90 border-transparent", className)}>
+        <Card variant={variant} className={cn("relative overflow-hidden group transition-all hover:bg-card/90 border-transparent rounded-lg shadow-lg hover:shadow-xl", className)}>
             <CardContent className="p-5">
                 <div className="flex justify-between items-start mb-4">
                     <div className="space-y-1">
